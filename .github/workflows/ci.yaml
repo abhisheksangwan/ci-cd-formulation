@@ -14,17 +14,18 @@ jobs:
     - name: Checkout code #clone the code to github machine
       uses: actions/checkout@v2 #This is opensource action that brings code to ubuntu machine
 
-    # - name: Prepare SSH key and known_hosts
-    #   run: |
-    #     mkdir -p ~/.ssh
-    #     echo "$SSH_PRIVATE_KEY" > keyfile
-    #     chmod 600 keyfile
-    #     ssh-keyscan ec2-13-211-144-149.ap-southeast-2.compute.amazonaws.com >> ~/.ssh/known_hosts
+    - name: Prepare SSH key and known_hosts
+      run: |
+        mkdir -p ~/.ssh
+        echo "$SSH_PRIVATE_KEY" > keyfile
+        chmod 600 keyfile
+        ssh-keyscan ec2-13-211-144-149.ap-southeast-2.compute.amazonaws.com >> ~/.ssh/known_hosts
 
     - name: SSH and deploy # redeploy 
       env:
         SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
       run: |
-
-        ssh -t -i -----BEGIN RSA PRIVATE KEY-----MIIEpQIBAAKCAQEAoc517O65HHqgfE4klwCmX4+dXiJZfqGLgS0peV2MDp/iDqNlYVNe1u9jvnKZCtjHLziU+ozZBLNQCOKQz+OwvqdioATxpTA4RnCBjEH3m6WptXEGPdwdNlpMXbjB5xa77lSKt5XLqRzT0rn9FVZywEtjWApbrkm8UuaKvMEwBqhBbT6gDR9raOCrBlcGp9iiH6S8oJfxhCCf1zKXGniF8xMv5WzLFOuWVJ+S000ofJlflFt7SQyJs2Pg797t6n/FXmqi59ny0WZVwmfiCH+DY/QTBGC1B1NEg+44DYroG4rtzhASf48TpZgEroMCoCkEFdsWhX80LUYjy+8Zkc2CrQIDAQABAoIBAE4HNi8P4Ayvxfyr4lE/avviUc03W1kJpjChCsMQLZ5P07+jZBxPDAkyYDNTKCJm74cCDjXU/kKaBhqCx7q43l7ScWkheTZjzn+Jea+dkD5q4TAyVQQ3xY6UdQctNbSu7em8szhc8F2ZHT0m8JScfvxXvLx68xcmoiPzI/BydsrORJ4tikhnHf0yUeI8waRNKK7IOYMXkTtl1LLtNxHFn/3MB3V7QHBMONFkNC1MnDAmYpfZEC088W3mb1P/cbH1WO9EIhTue9uzO7e6VmOZrHZurdZBvdmLG4/dTCJD0IqPIBXdwWdIc1SZJbEl4QYe2cJ0tFSrMyFnLXV81lhIECgYEA81Q+zflyg0mLJ+KF0SCoQXxTjptR1IhyhW9tnDlkpIiPdn+PA0OCahrp2mzRLIv4k6QPAIuQoVoWXO8rBOrk9skuIbaaDO2CUMboqJugapqkk3JQgqKmtx4juUQUufdyTtEl3+vd15bOlq1K/wb7ApvUfnzLX3B/uHxR9eDuuUCgYEAqjtoBmCaoYI8FQb56woFtyKA5kkQGtVvmIUOCDPlLrul7sMNbGgNus9dpJilLo+4Xq0oi08ZW01IEXlvaw6oB/Imzbt15eXld+i9Skzx/IZ3iOmlrcsOfDubDrqSxM8Vs5qB9Mw6oT/cAlzRsR6/aR/lpj1TzgDWpyYGIVBCkCgYEAu+7wRvOHb0EI+jgpdHjNmy5j9rudexIbqVWDieqGAdH7Q+GHWlUjoljzNK0dqUwaUaauHbrtcbFKA/Sw3xKLSdPeDmnTF3MFeE/4d+ki/9MKk1ryNcNcEgh0PO4JOAyWu6srnoO0poMycgvL5abFjaE/gKXwCXmBG8LhJo+gsUCgYEAgtoBqHbzUH6HEHUWnhYvGqObUvi8bOgUmKs7b4mJBoJKNEeLMxq+VHiuXh5XuIsRGrD/eEndSvmPBKe12P4ycjL8OJMYb8gOtR2XWi2bNMkHyS4QNG8JS2Vl4wR3HOExhT23JxynVR22W6BoA9Wz1JRFnrUkmygrK9C9hY30ECgYEA4nlOJTMM8F/sxBtatpUEJN81DD51tTkirNaf9rzz+chpoEeO/MjWNinea+eMMLQlR2Mlqvtl661BbAN0/qcF0dQYpQgDJJ4FjrbnwiJsGUyuVF3tIYw8cpPXmCBc7d5Kjwue2/Yb4dRwfyNO0n3HowK8XFru5zs+uoJo/hYOwI-----END RSA PRIVATE KEY----- ubuntu@ec2-16-16-185-1.eu-north-1.compute.amazonaws.com "sudo bash ~/deploy.sh"
+        echo "$SSH_PRIVATE_KEY" > keyfile
+        chmod 600 keyfile
+        ssh -t -i keyfile ubuntu@ec2-16-16-185-1.eu-north-1.compute.amazonaws.com "sudo bash ~/deploy.sh"
 
